@@ -4,19 +4,18 @@ import json
 from typing import List, Dict, Set
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
-from astrbot.api import logger
+from astrbot.api import logger, AstrBotConfig
 import astrbot.api.message_components as Comp
 
-@register("random_videos", "Marvin", "随机视频播放插件 - Discord 原生播放器支持，防重复播放，OSS 自动同步", "1.1.1")
+@register("random_videos", "Marvin", "随机视频播放插件 - Discord 原生播放器支持，防重复播放，OSS 自动同步", "1.1.2")
 class RandomVideosPlugin(Star):
-    def __init__(self, context: Context):
+    def __init__(self, context: Context, config: AstrBotConfig):
         super().__init__(context)
+        self.config = config
         self.video_urls: List[str] = []
         self.session_history: Dict[str, Set[str]] = {}  # 记录每个会话已播放的视频
 
-        # 根据官方文档，在 __init__ 中读取插件配置
-        self.plugin_config = self.context.get_plugin_config()
-        logger.info(f"插件配置加载: {self.plugin_config}")
+        logger.info(f"插件配置加载: {self.config}")
 
     async def initialize(self):
         """插件初始化时加载视频列表"""
@@ -24,8 +23,8 @@ class RandomVideosPlugin(Star):
 
     async def load_videos(self):
         """从配置的 JSON URL 加载视频列表"""
-        # 使用在 __init__ 中获取的配置
-        video_json_url = self.plugin_config.get("video_json_url", "")
+        # 使用 AstrBotConfig.get() 方法读取配置
+        video_json_url = self.config.get("video_json_url", "")
 
         if not video_json_url:
             logger.warning("未配置视频 JSON URL，请在插件配置中设置 video_json_url")

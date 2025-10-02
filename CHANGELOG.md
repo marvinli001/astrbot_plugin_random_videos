@@ -1,5 +1,21 @@
 # 更新日志
 
+## [1.1.2] - 2025-10-02
+
+### 🐛 Bug 修复
+- **修复插件初始化错误** ⭐
+  - 按照 AstrBot v4 官方文档规范修正 `__init__` 方法签名
+  - 添加 `config: AstrBotConfig` 参数接收插件配置
+  - 修复 `TypeError: __init__() got an unexpected keyword argument 'config'` 错误
+  - 修复 `AttributeError: 'Context' object has no attribute 'get_plugin_config'` 错误
+
+### 🔧 技术改进
+- 使用官方标准的配置读取方式：`self.config.get("video_json_url")`
+- 导入 `AstrBotConfig` 类型提示
+- 代码完全符合 [AstrBot v4 插件开发规范](https://docs-v4.astrbot.app/dev/star/plugin.html)
+
+---
+
 ## [1.1.1] - 2025-10-02
 
 ### 🐛 Bug 修复
