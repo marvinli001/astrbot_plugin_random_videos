@@ -9,9 +9,9 @@ import astrbot.api.message_components as Comp
 
 @register("random_videos", "Marvin", "随机视频播放插件 - Discord 原生播放器支持，防重复播放，OSS 自动同步", "1.1.2")
 class RandomVideosPlugin(Star):
-    def __init__(self, context: Context, config: AstrBotConfig):
+    def __init__(self, context: Context, config: AstrBotConfig = None):
         super().__init__(context)
-        self.config = config
+        self.config = config if config is not None else {}
         self.video_urls: List[str] = []
         self.session_history: Dict[str, Set[str]] = {}  # 记录每个会话已播放的视频
 
