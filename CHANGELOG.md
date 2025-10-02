@@ -1,5 +1,27 @@
 # 更新日志
 
+## [1.1.4] - 2025-10-02
+
+### ✨ 优化
+- **简化 Discord 消息显示** ⭐
+  - 移除播放统计信息（"📊 本轮已播放: X/Y"）
+  - 只发送纯视频链接，让 Discord 自动生成预览卡片
+  - 更简洁清爽的用户体验
+
+### 📝 文档更新
+- 添加 Cloudflare CORS 配置说明
+- 解决 Discord PC 端视频播放问题的方法
+- 说明需要在 CDN 添加以下响应头：
+  - `Access-Control-Allow-Origin: *`
+  - `Content-Disposition: inline`
+
+### 🔧 技术说明
+- Discord 对 YouTube/Twitch/Streamable 等平台有特殊支持
+- 自定义 CDN 视频无法获得相同的卡片样式
+- 但添加 CORS 头后可以正常播放
+
+---
+
 ## [1.1.3] - 2025-10-02
 
 ### 🐛 Bug 修复

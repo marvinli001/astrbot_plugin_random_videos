@@ -7,7 +7,7 @@ from astrbot.api.star import Context, Star, register
 from astrbot.api import logger, AstrBotConfig
 import astrbot.api.message_components as Comp
 
-@register("random_videos", "Marvin", "随机视频播放插件 - Discord 原生播放器支持，防重复播放，OSS 自动同步", "1.1.3")
+@register("random_videos", "Marvin", "随机视频播放插件 - Discord 原生播放器支持，防重复播放，OSS 自动同步", "1.1.4")
 class RandomVideosPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig = None):
         super().__init__(context)
@@ -105,27 +105,15 @@ class RandomVideosPlugin(Star):
 
             # 根据平台不同，使用不同的发送方式
             if platform_name.lower() == "discord":
-                # Discord 平台：直接发送链接，Discord 会自动嵌入视频预览和播放器
+                # Discord 平台：直接发送视频链接，Discord 会自动嵌入预览
                 message_chain.append(Comp.Plain(f"{video_url}"))
-
-                # 添加描述文本
-                history_count = len(self.session_history.get(session_id, set()))
-                total_count = len(self.video_urls)
-                message_chain.append(Comp.Plain(f"\n📊 本轮已播放: {history_count}/{total_count}"))
-                message_chain.append(Comp.Plain(f"\n💡 发送 '/rv' 获取下一个视频"))
             else:
                 # 其他平台：尝试发送视频组件
                 try:
                     message_chain.append(Comp.Video.fromURL(url=video_url))
                 except:
                     # 如果视频组件失败，发送链接
-                    message_chain.append(Comp.Plain(f"🎬 随机视频:\n{video_url}"))
-
-                # 添加提示信息
-                history_count = len(self.session_history.get(session_id, set()))
-                total_count = len(self.video_urls)
-                message_chain.append(Comp.Plain(f"\n\n📊 本轮已播放: {history_count}/{total_count}"))
-                message_chain.append(Comp.Plain(f"\n💡 发送 '/randomvideo' 或 '/rv' 获取下一个视频"))
+                    message_chain.append(Comp.Plain(f"{video_url}"))
 
             yield event.chain_result(message_chain)
         else:

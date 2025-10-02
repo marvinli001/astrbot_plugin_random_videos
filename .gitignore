@@ -31,3 +31,4 @@ scripts/.env
 scripts/videos.json
 scripts/*.log
 scripts/*.bak
+scripts/streamable.json
