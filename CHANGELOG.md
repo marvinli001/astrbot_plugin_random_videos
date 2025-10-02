@@ -1,5 +1,21 @@
 # 更新日志
 
+## [1.1.3] - 2025-10-02
+
+### 🐛 Bug 修复
+- **修复 Discord 视频显示问题** ⭐
+  - 改为直接发送视频 URL 链接，由 Discord 自动嵌入播放器
+  - 移除 `Comp.Video.fromURL()` 方式（Discord 不支持）
+  - 符合 Discord 官方视频嵌入规范
+  - 确保 Discord 用户能正常看到视频播放器
+
+### 🔧 技术改进
+- config 参数设为可选（`config: AstrBotConfig = None`）
+- 兼容 AstrBot 的不同插件加载方式
+- 添加 `.gitignore` 防止缓存文件污染
+
+---
+
 ## [1.1.2] - 2025-10-02
 
 ### 🐛 Bug 修复
