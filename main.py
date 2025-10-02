@@ -7,7 +7,7 @@ from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 import astrbot.api.message_components as Comp
 
-@register("random_videos", "YourName", "随机视频播放插件 - 支持从 JSON 文件随机播放视频", "1.0.0")
+@register("random_videos", "Marvin", "随机视频播放插件 - Discord 原生播放器支持，防重复播放，OSS 自动同步", "1.1.1")
 class RandomVideosPlugin(Star):
     def __init__(self, context: Context):
         super().__init__(context)
