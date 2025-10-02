@@ -1,5 +1,5 @@
 name: random_videos # 这是你的插件的唯一识别名。
 desc: 随机视频播放插件 - Discord 原生播放器支持，防重复播放，OSS 自动同步 # 插件简短描述
-version: v1.1.1 # 插件版本号。格式：v1.1.1 或者 v1.1
+version: 1.1.1 # 插件版本号。格式：v1.1.1 或者 v1.1
 author: Marvin # 作者
 repo: https://github.com/marvinli001/astrbot_plugin_random_videos # 插件的仓库地址
