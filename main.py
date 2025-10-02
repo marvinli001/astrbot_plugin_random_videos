@@ -105,25 +105,14 @@ class RandomVideosPlugin(Star):
 
             # 根据平台不同，使用不同的发送方式
             if platform_name.lower() == "discord":
-                # Discord 平台：使用视频组件发送，触发原生播放器
-                try:
-                    # 尝试使用视频组件（可以触发 Discord 媒体控件）
-                    message_chain.append(Comp.Video.fromURL(url=video_url))
+                # Discord 平台：直接发送链接，Discord 会自动嵌入视频预览和播放器
+                message_chain.append(Comp.Plain(f"{video_url}"))
 
-                    # 添加描述文本
-                    history_count = len(self.session_history.get(session_id, set()))
-                    total_count = len(self.video_urls)
-                    message_chain.append(Comp.Plain(f"\n📊 本轮已播放: {history_count}/{total_count}"))
-                    message_chain.append(Comp.Plain(f"\n💡 发送 '/rv' 获取下一个视频"))
-                except Exception as e:
-                    # 如果视频组件失败，降级为纯链接（Discord 会自动嵌入）
-                    logger.warning(f"Discord 视频组件发送失败，降级为链接: {str(e)}")
-                    message_chain.append(Comp.Plain(f"🎬 随机视频:\n{video_url}"))
-
-                    history_count = len(self.session_history.get(session_id, set()))
-                    total_count = len(self.video_urls)
-                    message_chain.append(Comp.Plain(f"\n\n📊 本轮已播放: {history_count}/{total_count}"))
-                    message_chain.append(Comp.Plain(f"\n💡 发送 '/rv' 获取下一个视频"))
+                # 添加描述文本
+                history_count = len(self.session_history.get(session_id, set()))
+                total_count = len(self.video_urls)
+                message_chain.append(Comp.Plain(f"\n📊 本轮已播放: {history_count}/{total_count}"))
+                message_chain.append(Comp.Plain(f"\n💡 发送 '/rv' 获取下一个视频"))
             else:
                 # 其他平台：尝试发送视频组件
                 try:
