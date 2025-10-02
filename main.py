@@ -20,7 +20,22 @@ class RandomVideosPlugin(Star):
 
     async def load_videos(self):
         """从配置的 JSON URL 加载视频列表"""
-        config = self.context.get_config()
+        # AstrBot 会自动将配置注入到 self.config 属性
+        config = getattr(self, 'config', {})
+
+        # 如果 self.config 不存在，尝试其他方式
+        if not config:
+            logger.info("尝试从 context 获取配置...")
+            try:
+                # 尝试获取插件配置
+                all_config = self.context.get_config()
+                logger.info(f"获取到的配置: {all_config}")
+                config = all_config.get('plugin_config', {}).get('random_videos', {})
+            except Exception as e:
+                logger.error(f"获取配置失败: {str(e)}")
+                config = {}
+
+        logger.info(f"最终使用的配置: {config}")
         video_json_url = config.get("video_json_url", "")
 
         if not video_json_url:
