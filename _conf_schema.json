@@ -1,0 +1,14 @@
+{
+  "video_json_url": {
+    "description": "视频链接 JSON 文件的 URL",
+    "type": "string",
+    "hint": "输入包含视频 URL 列表的 JSON 文件链接",
+    "default": ""
+  },
+  "command_name": {
+    "description": "触发随机视频的命令名",
+    "type": "string",
+    "hint": "例如：randomvideo 或 rv",
+    "default": "randomvideo"
+  }
+}
