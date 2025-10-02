@@ -14,29 +14,18 @@ class RandomVideosPlugin(Star):
         self.video_urls: List[str] = []
         self.session_history: Dict[str, Set[str]] = {}  # 记录每个会话已播放的视频
 
+        # 根据官方文档，在 __init__ 中读取插件配置
+        self.plugin_config = self.context.get_plugin_config()
+        logger.info(f"插件配置加载: {self.plugin_config}")
+
     async def initialize(self):
         """插件初始化时加载视频列表"""
         await self.load_videos()
 
     async def load_videos(self):
         """从配置的 JSON URL 加载视频列表"""
-        # AstrBot 会自动将配置注入到 self.config 属性
-        config = getattr(self, 'config', {})
-
-        # 如果 self.config 不存在，尝试其他方式
-        if not config:
-            logger.info("尝试从 context 获取配置...")
-            try:
-                # 尝试获取插件配置
-                all_config = self.context.get_config()
-                logger.info(f"获取到的配置: {all_config}")
-                config = all_config.get('plugin_config', {}).get('random_videos', {})
-            except Exception as e:
-                logger.error(f"获取配置失败: {str(e)}")
-                config = {}
-
-        logger.info(f"最终使用的配置: {config}")
-        video_json_url = config.get("video_json_url", "")
+        # 使用在 __init__ 中获取的配置
+        video_json_url = self.plugin_config.get("video_json_url", "")
 
         if not video_json_url:
             logger.warning("未配置视频 JSON URL，请在插件配置中设置 video_json_url")
